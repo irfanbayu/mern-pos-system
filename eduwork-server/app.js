@@ -5,7 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
 const productRoute = require("./app/product/router");
-const categoryRoute = require("./app/product/router");
+const categoryRoute = require("./app/category/router");
 
 //* CARA SEPERTI TASK SEBELUMNYA
 const { dbConnection } = require("./database");

@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const Categories = require("./model");
 
 const store = async (req, res, next) => {
@@ -55,7 +54,7 @@ const destroy = async (req, res, next) => {
   }
 };
 
-const index = async (res, req, next) => {
+const index = async (req, res, next) => {
   try {
     let category = await Categories.find();
     return res.json(category);
