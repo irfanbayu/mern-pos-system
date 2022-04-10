@@ -21,6 +21,15 @@ const productSchema = new Schema(
       default: 0,
     },
     image_url: String,
+
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+    },
+    tags: {
+      type: Schema.Types.ObjectId,
+      ref: "Tag",
+    },
   },
   { timestamps: true }
 );
