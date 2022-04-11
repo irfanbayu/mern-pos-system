@@ -4,7 +4,7 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   try {
     const payload = req.body;
 
@@ -34,11 +34,11 @@ const localStrategy = async (email, password, done) => {
     );
     if (!user) return done();
     if (bcrypt.compareSync(password, user.password)) {
-      ({ password, ...userWithoutPassword } = user.toJson());
+      ({ password, ...userWithoutPassword } = user.toJSON());
       return done(null, userWithoutPassword);
     }
   } catch (err) {
-    done(err, null);
+    return done(err, null);
   }
   done();
 };
@@ -48,14 +48,19 @@ const login = async (req, res, next) => {
     if (err) return next(err);
 
     if (!user)
-      return res.json({ error: 1, message: "Invalid email or password" });
+      return res
+        .status(400)
+        .json({ error: 1, message: "Invalid email or password" });
+    // .json(user)
+    // console.log(user);
 
     //   process.env.JWT_SECRET
     let signed = jwt.sign(user, config.secretkey);
 
     await User.findByIdAndUpdate(user._id, { $push: { token: signed } });
 
-    res.json({
+    // console.log(JSON.stringify({ message: "Login Succes" }));
+    res.status(200).json({
       message: "Login Success",
       user,
       token: signed,

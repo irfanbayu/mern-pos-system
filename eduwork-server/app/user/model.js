@@ -30,7 +30,7 @@ let userSchema = Schema(
 
     role: {
       type: String,
-      enum: ["admin", "user"],
+      enum: ["user", "admin"],
       default: "user",
     },
 
@@ -68,7 +68,7 @@ userSchema.path("email").validate(
 
 // membuat hash password
 const HASH_ROUND = 10;
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", function (next) {
   this.password = bcrpyt.hashSync(this.password, HASH_ROUND);
   next();
 });
