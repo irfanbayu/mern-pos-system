@@ -1,4 +1,4 @@
-const { getToken } = require("../utils");
+const { getToken, policyFor } = require("../utils");
 const jwt = require("jsonwebtoken");
 const config = require("../app/config");
 const User = require("../app/user/model");
@@ -33,6 +33,21 @@ function decodeToken() {
   };
 }
 
+//middleware untuk cek hak akses / authorization
+function policy_check(action, subject) {
+  return function (req, res, next) {
+    let policy = policyFor(req.user);
+    if (!policy.can(action, subject)) {
+      return res.json({
+        error: 1,
+        message: `You don't have permission to ${action} ${subject}`,
+      });
+    }
+    next();
+  };
+}
+
 module.exports = {
   decodeToken,
+  policy_check,
 };
