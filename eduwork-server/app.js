@@ -10,6 +10,7 @@ const categoryRoute = require("./app/category/router");
 const tagRoute = require("./app/tag/router");
 const authRoute = require("./app/auth/router");
 const deliveryAddressRoute = require("./app/deliveryaddress/router");
+const cartRoute = require("./app/cart/router");
 
 //* CARA SEPERTI TASK SEBELUMNYA
 const { dbConnection } = require("./database");
@@ -34,6 +35,7 @@ app.use("/api", productRoute);
 app.use("/api", categoryRoute);
 app.use("/api", tagRoute);
 app.use("/api", deliveryAddressRoute);
+app.use("/api", cartRoute);
 
 //home
 app.use("/", function (req, res) {
