@@ -1,7 +1,7 @@
 const Order = require("../order/model");
 const { Types } = require("mongoose");
 const OrderItem = require("../order-item/model");
-const DeliveryAddress = require("../delivery-address/model");
+const DeliveryAddress = require("../deliveryaddress/model");
 const CartItem = require("../cart-item/model");
 
 const store = async (req, res, next) => {
